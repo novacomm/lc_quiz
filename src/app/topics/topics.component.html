@@ -1,0 +1,10 @@
+<div *ngIf="topics !== undefined">
+  <div class="ecl-row topic-buttons">
+    <a *ngFor="let topic of topics; let i= index;" class="ecl-col-3 ecl-link--standalone ecl-link--icon"
+      [routerLink]="['/topic', convertToSlug(topic.name)]">
+      <div class="module topic topic-{{i}} {{convertToSlug(topic.name)}}">
+        <h4 class="ecl-u-type-2xl ecl-u-type-bold">{{topic.name}}</h4>
+      </div>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<ng-container *ngIf="hideOutdatedContent">
+  <div id="cover-spin"></div>
+</ng-container>
+<ng-container *ngIf="!hideOutdatedContent">
+    <div *ngIf="topic !== undefined && questions !== undefined">
+        <div class="node-qcm-finish-page">
+            <div class="ecl-row">
+                <div class="ecl-col-lg-6 ecl-offset-lg-3">
+                    <div class="qcm--feedback qcm--color-scheme--blue ecl-u-pa-m ecl-u-mb-l ecl-u-d-md-flex ecl-u-align-items-center">
+                        <div class="qcm--feedback--medal ecl-u-mr-l ecl-u-ml-m ecl-u-mb-s ecl-u-mb-md-none">
+                            <div *ngIf="medal=='gold'">
+                                <img alt="Quiz gold medal image" class="ecl-image ecl-image--fluid  gold-medal" src="https://europa.eu/learning-corner/sites/teachers2/themes/tc_theme/assets/images/quiz/gold-medal.png" title="Congratulations" typeof="foaf:Image">
+                            </div>
+                            <div *ngIf="medal=='silver'">
+                                <img alt="Quiz silver medal image" class="ecl-image ecl-image--fluid silver-medal" src="https://europa.eu/learning-corner/sites/teachers2/themes/tc_theme/assets/images/quiz/silver-medal.png" title="Congratulations" typeof="foaf:Image">
+                            </div>
+                            <div *ngIf="medal=='bronze'">
+                                <img alt="Quiz bronze medal image" class="bronze-medal ecl-image ecl-image--fluid " src="https://europa.eu/learning-corner/sites/teachers2/themes/tc_theme/assets/images/quiz/bronze-medal.png" title="Congratulations" typeof="foaf:Image">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="qcm--feedback--label ecl-u-mb-xxs">
+                                <h2 class="ecl-u-type-2xl ecl-u-type-bold"> {{additionalLabelsService.getLabel('miscelaneous', 'heading_congratulations')}}</h2>
+                            </div>
+                            <div class="qcm--feedback--body">
+                                <p class="ecl-u-type-paragraph ecl-u-type-prolonged-l">{{additionalLabelsService.getLabel('miscelaneous', 'body_congratulations_pre')}} "{{topic.name}}" {{additionalLabelsService.getLabel('miscelaneous', 'body_congratulations_post')}} </p>
+                            </div>
+                            <div class="qcm--feedback--score ecl-u-mt-xxxs ecl-u-type-2xl ecl-u-type-bold">
+                                {{additionalLabelsService.getLabel('miscelaneous', 'label_your_score')}}: <span id="your-score">{{getScore()}} / {{questions.length * 2}}</span>
+                            </div>
+                            <div class="field field-label-hidden field-name-field-tc-qcm-feedback-score-com field-type-text-long">
+                                <div class="ecl-field__body">
+                                    <div class="item-{{medal}}">
+                                        <div class="ecl-editor first" [innerHTML]="additionalLabelsService.getLabel('miscelaneous', medal + '_body_feedback')">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-topics></app-topics>
+    </div>
+</ng-container>

@@ -1,0 +1,14 @@
+<ng-container *ngIf="hideOutdatedContent">
+  <div id="cover-spin"></div>
+</ng-container>
+<ng-container *ngIf="!hideOutdatedContent">
+    <div *ngIf="topic !== undefined">
+        <h2 class="ecl-u-type-5xl ecl-u-type-bold">{{topic.name}}</h2>
+        <div class="ecl-row">
+            <div class="ecl-col-md-7">
+                <p class="ecl-u-type-paragraph ecl-u-type-prolonged-xl" [innerHTML]="topic.description"></p>
+                <p><a class="start-quiz-button ecl-link ecl-link--standalone ecl-u-align-items-center ecl-u-d-inline-flex ecl-u-justify-content-center ecl-u-mb-m ecl-u-mb-md-none ecl-u-mh-auto ecl-u-mh-md-none ecl-u-ml-md-auto ecl-u-mr-xl ecl-u-mt-xl ecl-u-pl-3xl qcm--btn--tag" (click)="startQuiz()">{{additionalLabelsService.getLabel('miscelaneous', 'button_start')}}</a></p>
+            </div>
+        </div>
+    </div>
+</ng-container>

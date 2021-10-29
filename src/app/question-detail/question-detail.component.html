@@ -1,0 +1,73 @@
+<ng-container *ngIf="hideOutdatedContent">
+  <div id="cover-spin"></div>
+</ng-container>
+<ng-container *ngIf="!hideOutdatedContent">
+    <div *ngIf="topic !== undefined && question !== undefined">
+        <div class="ecl-row">
+            <div class="ecl-col-md ecl-u-flex-grow-0 ecl-u-d-flex ecl-u-justify-content-center ecl-u-justify-content-md-start ecl-u-mb-m ecl-u-mb-md-none">
+                <div class="qcm--question-counter ecl-u-d-flex ecl-u-flex-column ecl-u-justify-content-center ecl-u-align-items-center ecl-u-mr-md-s">
+                    <svg viewBox="0 0 57 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g transform="translate(-264.000000, -385.000000)">
+                            <g id="Group" transform="translate(195.000000, 385.000000)">
+                                <polygon fill="#000000" id="Fill-1" points="92.1757188 0 92.1757188 42.0926518 92.6709265 44.6660809 75.7348243 29.3162939 69 36.5463259 97.1277955 62 125.354633 36.5463259 118.520767 29.3162939 101.584665 44.6660809 102.079872 42.0926518 102.079872 0"></polygon>
+                            </g>
+                        </g>
+                    </svg>
+                    <div class="ecl-u-mt-m ecl-u-type-2xl ecl-u-type-bold">{{additionalLabelsService.getLabel('miscelaneous', 'label_question')}}</div>
+                    <div class="qcm--question-counter--count ecl-u-type-6xl"><span class="ecl-u-type-6xl ecl-u-type-bold">{{question.position}}</span>/<span class="ecl-u-type-6xl">{{questions.length}}</span></div>
+                </div>
+            </div>
+            <div class="ecl-col-md ecl-u-pl-md-l">
+                <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+                    <div class="views-field views-field-name-field">
+                        <h1 class="field-content qcm--title ecl-u-mb-xs ecl-u-type-5xl ecl-u-type-bold">{{topic.name}}</h1>
+                    </div>
+                    <div class="ecl-paragraph ecl-u-mb-s qcm--body">
+                        <p class="ecl-u-type-paragraph ecl-u-type-prolonged-l">{{question.question_note}}</p>
+                    </div>
+                    <h2 class="qcm--question ecl-u-type-2xl ecl-u-type-bold">{{question.title}}</h2>
+                </div>
+            </div>
+            <div class="ecl-col-md ecl-u-flex-grow-0 ecl-u-order-first ecl-u-order-md-last ecl-u-d-flex ecl-u-justify-content-center ecl-u-justify-content-md-end ecl-u-align-items-start ecl-u-mb-m ecl-u-mb-md-none">
+            </div>
+        </div>
+        <div *ngIf="!showAnswer">
+            <div class="ecl-row">
+                <div class="ecl-col-md-7 ecl-u-pr-md-xl">
+                    <div [ngClass]="{'qcm--lbl--error ecl-u-pv-2xs ecl-u-ph-m ecl-u-mb-s try-again' : true, 'tc-u-invisible': !showTryAgain}">Try again</div>
+                    <div class="qcm--answer-list">
+                        <div *ngFor="let answer of question.answers; let i = index">
+                            <a [ngClass]="getAnswerClasses(answerKeyPrefix+(i+1))" (click)="submitAnswer(i+1);"><span class="ecl-u-mr-s qcm--answer-list--answer--prefix ecl-u-type-2xl ecl-u-type-bold">{{i+1}}</span>{{answer.answer}}</a>
+                        </div>
+                        <div *ngIf="correctFound() || !this.answerInputEnabled || this.getTriesCount() > 1" class="ecl-u-d-flex ecl-u-justify-content-end">
+                            <a class="back-to-answer ecl-link ecl-u-mb-m ecl-u-mb-md-none ecl-u-pa-xs qcm--btn--outline ecl-u-type-l ecl-u-type-bold" (click)="[openAnswer()]">Answer <span class="ecl-icon ecl-icon--right"></span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="ecl-col-md-5">
+                    <div class="qcm--answer-list--image">
+                        <img class="ecl-image ecl-image--fluid qcm--image" *ngIf="question.question_image" src="{{question.question_image.url}}"></div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="showAnswer" class="ecl-u-bg-default ecl-u-mt-m">
+            <div class="ecl-row">
+                <div class="ecl-col-md-7 ecl-u-pr-md-none ecl-u-d-flex ecl-u-flex-column">
+                    <div class="ecl-u-pa-m ecl-u-pr-md-none ecl-u-pb-md-none ecl-u-pt-md-l ecl-u-pl-md-l">
+                        <div class="ecl-paragraph qcm--explanation">
+                            <p [innerHTML]="question.answer_note" class="ecl-u-type-paragraph ecl-u-type-prolonged-l">{{question.answer_note}}</p>
+                        </div>
+                    </div>
+                    <div class="ecl-u-pb-l ecl-u-pl-l ecl-u-d-lg-flex ecl-u-justify-content-between ecl-u-align-items-center tc-u-mt-auto">
+                        <p><a class="back-to-question ecl-link ecl-u-d-inline-flex qcm--btn--outline-colored  ecl-u-pa-xs ecl-u-type-l ecl-u-type-bold" (click)="[closeAnswer()]"><span class="ecl-icon ecl-icon--left"></span> {{additionalLabelsService.getLabel('miscelaneous', 'button_back_to_question')}}</a></p>
+                        <p><a class="ecl-link ecl-u-align-items-center ecl-u-d-inline-flex ecl-u-justify-content-center ecl-u-mr-xl ecl-u-pl-xl qcm--btn--tag ecl-u-type-l ecl-u-type-bold" *ngIf="question.position < questions.length" (click)="goToNextQuestion()">{{additionalLabelsService.getLabel('miscelaneous', 'button_next_question')}}</a></p>
+                        <p><a class="ecl-link ecl-u-align-items-center ecl-u-d-inline-flex ecl-u-justify-content-center ecl-u-mr-3xl ecl-u-pl-xl qcm--btn--tag ecl-u-type-l ecl-u-type-bold" *ngIf="question.position >= questions.length" [routerLink]="['../score']">{{additionalLabelsService.getLabel('miscelaneous', 'button_see_the_results')}}</a></p>
+                    </div>
+                </div>
+                <div class="ecl-col-md-5">
+                    <div class="qcm--explanation--image"><img class="ecl-image ecl-image--fluid qcm--image" *ngIf="question.answer_image" src="{{question.answer_image.url}}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
