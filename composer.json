@@ -3,15 +3,11 @@
     "description": "Learning corner JS Quiz",
     "type": "library",
     "minimum-stability": "dev",
-    "prefer-stable": true,
     "license": "GPL-3.0",
     "authors": [
         {
             "name": "Ivan Chaer",
             "email": "ivan.chaer@novacomm-europa.eu"
         }
-    ],
-    "require": {
-        "php": ">=7.0.0"
-    }
+    ]
 }
