@@ -1,7 +1,7 @@
 {
     "name": "novacomm/lc_quiz",
     "description": "Learning corner JS Quiz",
-    "type": "library",
+    "type": "asset",
     "minimum-stability": "dev",
     "license": "GPL-3.0",
     "authors": [
